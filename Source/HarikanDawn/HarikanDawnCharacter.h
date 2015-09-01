@@ -28,12 +28,16 @@ public:
 
 	/** Speed Adjustment Rate */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Default)
-		float MovementChangeRate = 5;
+	float MovementChangeRate = 5;
 
-
+	/** cache DefaultSpeeds */
 	float DefaultMaxWalkSpeed;
 	float DefaultMaxSwimSpeed;
 	float DefaultMaxFlySpeed;
+
+	/** control camera boom scaling with speed */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Default)
+		bool	H_Setting_bScaleCamerBoomWithSpeed = true;		//H_Setting variables should be moved out to settings
 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Default)

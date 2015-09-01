@@ -17,19 +17,19 @@ AHarikanDawnCharacter::AHarikanDawnCharacter()
 
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
-	bUseControllerRotationYaw = false;
+	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = false;
 
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
-	GetCharacterMovement()->JumpZVelocity = 600.f;
+	GetCharacterMovement()->JumpZVelocity = 500.f;
 	GetCharacterMovement()->AirControl = 0.2f;
 
+	// Save the default movement speeds
 	DefaultMaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	DefaultMaxSwimSpeed = GetCharacterMovement()->MaxSwimSpeed;
 	DefaultMaxFlySpeed = GetCharacterMovement()->MaxFlySpeed;
-
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -115,6 +115,9 @@ void AHarikanDawnCharacter::MoveForward(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
 	{
+
+		float	movementScale = 1.0f;
+
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -134,14 +137,17 @@ void AHarikanDawnCharacter::MoveForward(float Value)
 				if (MovementName == "Walking")
 				{
 					Movement->MaxWalkSpeed += MovementChangeRate;
+					movementScale = 1 + log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed);
 				}
 				else if (MovementName == "Swimming")
 				{
 					Movement->MaxSwimSpeed += MovementChangeRate;
+					movementScale = 1 + log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed);
 				}
 				else if (MovementName == "Flying")
 				{
 					Movement->MaxFlySpeed += MovementChangeRate;
+					movementScale = 1 + log(Movement->MaxFlySpeed / DefaultMaxFlySpeed);
 				}
 			} 
 			else if (PC->IsInputKeyDown(EKeys::LeftControl))
@@ -152,14 +158,17 @@ void AHarikanDawnCharacter::MoveForward(float Value)
 				if (MovementName == "Walking")
 				{
 					Movement->MaxWalkSpeed -= MovementChangeRate;
+					movementScale = 1 + log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed);
 				}
 				else if (MovementName == "Swimming")
 				{
 					Movement->MaxSwimSpeed -= MovementChangeRate;
+					movementScale = 1 + log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed);
 				}
 				else if (MovementName == "Flying")
 				{
 					Movement->MaxFlySpeed -= MovementChangeRate;
+					movementScale = 1 + log(Movement->MaxFlySpeed / DefaultMaxFlySpeed);
 				}
 			}
 			else if (PC->IsInputKeyDown(EKeys::LeftAlt) || MovementAdjustment <0)
@@ -183,7 +192,8 @@ void AHarikanDawnCharacter::MoveForward(float Value)
 		}
 		
 		//Apply movement
-		AddMovementInput(Direction*MovementAdjustment, Value );
+		AddMovementInput(Direction, Value );
+		CameraBoom->TargetArmLength = 300.0f * H_Setting_bScaleCamerBoomWithSpeed ? movementScale : 1; //scale the boom with speed	
 		
 	}
 }
