@@ -138,17 +138,17 @@ void AHarikanDawnCharacter::MoveForward(float Value)
 				if (MovementName == "Walking")
 				{
 					Movement->MaxWalkSpeed += MovementChangeRate;
-					movementScale = 1 + abs(log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed));
+					movementScale = 1 + labs((long)log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed));
 				}
 				else if (MovementName == "Swimming")
 				{
 					Movement->MaxSwimSpeed += MovementChangeRate;
-					movementScale = 1 + abs( log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed));
+					movementScale = 1 + labs((long)log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed));
 				}
 				else if (MovementName == "Flying")
 				{
 					Movement->MaxFlySpeed += MovementChangeRate;
-					movementScale = 1 + abs(log(Movement->MaxFlySpeed / DefaultMaxFlySpeed));
+					movementScale = 1 + labs((long)log(Movement->MaxFlySpeed / DefaultMaxFlySpeed));
 				}
 			} 
 			else if (PC->IsInputKeyDown(EKeys::LeftControl))
@@ -159,17 +159,17 @@ void AHarikanDawnCharacter::MoveForward(float Value)
 				if (MovementName == "Walking")
 				{
 					Movement->MaxWalkSpeed -= MovementChangeRate;
-					movementScale = 1 + abs(log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed));
+					movementScale = 1 + labs((long)log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed));
 				}
 				else if (MovementName == "Swimming")
 				{
 					Movement->MaxSwimSpeed -= MovementChangeRate;
-					movementScale = 1 + abs(log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed));
+					movementScale = 1 + labs((long)log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed));
 				}
 				else if (MovementName == "Flying")
 				{
 					Movement->MaxFlySpeed -= MovementChangeRate;
-					movementScale = 1 + abs(log(Movement->MaxFlySpeed / DefaultMaxFlySpeed));
+					movementScale = 1 + labs((long)log(Movement->MaxFlySpeed / DefaultMaxFlySpeed));
 				}
 			}
 			else if (PC->IsInputKeyDown(EKeys::LeftAlt) || MovementAdjustment <0)
