@@ -1,3 +1,6 @@
 [submodule "Content"]
 	path = Content
 	url = git@ArkProductions.tk:ark/content.git
+[submodule "server"]
+	path = server
+	url = ssh://git@ArkProductions.tk/ark/server.git
