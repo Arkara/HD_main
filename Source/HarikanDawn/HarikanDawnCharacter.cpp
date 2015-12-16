@@ -51,6 +51,7 @@ AHarikanDawnCharacter::AHarikanDawnCharacter()
 void AHarikanDawnCharacter::PostActorConstruction()
 {
 	SetReplicates(true);
+	SetReplicateMovement(true);
 }
 
 
@@ -137,17 +138,17 @@ void AHarikanDawnCharacter::MoveForward(float Value)
 				if (MovementName == "Walking")
 				{
 					Movement->MaxWalkSpeed += MovementChangeRate;
-					movementScale = 1 + log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed);
+					movementScale = 1 + labs((long)log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed));
 				}
 				else if (MovementName == "Swimming")
 				{
 					Movement->MaxSwimSpeed += MovementChangeRate;
-					movementScale = 1 + log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed);
+					movementScale = 1 + labs((long)log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed));
 				}
 				else if (MovementName == "Flying")
 				{
 					Movement->MaxFlySpeed += MovementChangeRate;
-					movementScale = 1 + log(Movement->MaxFlySpeed / DefaultMaxFlySpeed);
+					movementScale = 1 + labs((long)log(Movement->MaxFlySpeed / DefaultMaxFlySpeed));
 				}
 			} 
 			else if (PC->IsInputKeyDown(EKeys::LeftControl))
@@ -158,17 +159,17 @@ void AHarikanDawnCharacter::MoveForward(float Value)
 				if (MovementName == "Walking")
 				{
 					Movement->MaxWalkSpeed -= MovementChangeRate;
-					movementScale = 1 + log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed);
+					movementScale = 1 + labs((long)log(Movement->MaxWalkSpeed / DefaultMaxWalkSpeed));
 				}
 				else if (MovementName == "Swimming")
 				{
 					Movement->MaxSwimSpeed -= MovementChangeRate;
-					movementScale = 1 + log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed);
+					movementScale = 1 + labs((long)log(Movement->MaxSwimSpeed / DefaultMaxSwimSpeed));
 				}
 				else if (MovementName == "Flying")
 				{
 					Movement->MaxFlySpeed -= MovementChangeRate;
-					movementScale = 1 + log(Movement->MaxFlySpeed / DefaultMaxFlySpeed);
+					movementScale = 1 + labs((long)log(Movement->MaxFlySpeed / DefaultMaxFlySpeed));
 				}
 			}
 			else if (PC->IsInputKeyDown(EKeys::LeftAlt) || MovementAdjustment <0)
@@ -193,7 +194,7 @@ void AHarikanDawnCharacter::MoveForward(float Value)
 		
 		//Apply movement
 		AddMovementInput(Direction, Value );
-		CameraBoom->TargetArmLength = 300.0f * H_Setting_bScaleCamerBoomWithSpeed ? movementScale : 1; //scale the boom with speed	
+		CameraBoom->TargetArmLength = 300.0f * ( H_Setting_bScaleCamerBoomWithSpeed ? movementScale : 1); //scale the boom with speed	
 		
 	}
 }
