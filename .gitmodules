@@ -1,6 +1,6 @@
 [submodule "Content"]
 	path = Content
-	url = ssh://git@arkara.net:5454/ark/content.git
+	url = ssh://git@Arkara.net:5454/ark/content.git
 [submodule "server"]
 	path = server
-	url = ssh://arkara.net:5454/ark/server.git
+	url = ssh://git@Arkara.net:5454/ark/server.git
