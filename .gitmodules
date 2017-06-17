@@ -3,4 +3,4 @@
 	url = ssh://git@Arkara.net:5454/ark/content.git
 [submodule "server"]
 	path = server
-	url = ssh://git@Arkara.net:5454/ark/server.git
+	url = git@github.com:Arkara/Server.git
